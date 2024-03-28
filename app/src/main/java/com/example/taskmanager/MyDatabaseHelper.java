@@ -49,6 +49,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_DESCRIPTION, description);
+        cv.put(COLUMN_COMPLETED, false);
         long result = db.insert(TABLE_NAME, null, cv);
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
