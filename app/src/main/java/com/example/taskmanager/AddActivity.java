@@ -30,9 +30,13 @@ public class AddActivity extends AppCompatActivity {
 
        //gets the date input and stores in dateString variable
        dateInput.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+
            @Override
            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-               dateString = year + "-" + (month + 1) + "-" + dayOfMonth;
+
+               String formattedDay = String.format("%02d", dayOfMonth);
+               dateString = year + "-" + (month + 1) + "-" + formattedDay;
            }
        });
 
@@ -41,6 +45,8 @@ public class AddActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 //add data to DB
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);

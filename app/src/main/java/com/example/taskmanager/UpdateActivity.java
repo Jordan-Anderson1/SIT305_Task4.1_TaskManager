@@ -48,7 +48,8 @@ public class UpdateActivity extends AppCompatActivity {
         updateCalendarInput.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                updatedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                String formattedDay = String.format("%02d", dayOfMonth);
+                updatedDate = year + "-" + (month + 1) + "-" + formattedDay;
             }
         });
 

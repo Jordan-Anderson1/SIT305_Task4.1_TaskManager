@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -80,6 +82,22 @@ public class MainActivity extends AppCompatActivity {
             Todo todo = new Todo(Integer.valueOf(todo_id.get(i)), todo_title.get(i), todo_description.get(i), todo_dueDate.get(i));
             todosList.add(todo);
         }
+
+        sortByDate(todosList);
+
+
+    }
+
+    //Sorts list by date
+    public void sortByDate(List<Todo> todos) {
+        Comparator<Todo> dateComparator = new Comparator<Todo>() {
+            @Override
+            public int compare(Todo todo1, Todo todo2) {
+                return todo1.getDueDate().compareTo(todo2.getDueDate());
+            }
+        };
+
+        Collections.sort(todos, dateComparator);
     }
 
 
