@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addButton;
 
     MyDatabaseHelper myDB;
-    ArrayList<String> todo_id, todo_title, todo_description;
-    ArrayList<Boolean> todo_completed;
+    ArrayList<String> todo_id, todo_title, todo_description, todo_dueDate;
+
 
 
     @Override
@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
         todo_id = new ArrayList<>();
         todo_title = new ArrayList<>();
         todo_description = new ArrayList<>();
-        todo_completed = new ArrayList<>();
+        todo_dueDate = new ArrayList<>();
+
 
 
         //retrieve data
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         //takes data from arrays and creates instances of the Todo class and adds to list
         for(int i = 0; i < todo_id.size(); i++){
-            Todo todo = new Todo(Integer.valueOf(todo_id.get(i)), todo_title.get(i), todo_description.get(i));
+            Todo todo = new Todo(Integer.valueOf(todo_id.get(i)), todo_title.get(i), todo_description.get(i), todo_dueDate.get(i));
             todosList.add(todo);
         }
     }
@@ -93,16 +94,16 @@ public class MainActivity extends AppCompatActivity {
                 todo_id.add(cursor.getString(0));
                 todo_title.add(cursor.getString(1));
                 todo_description.add(cursor.getString(2));
+                todo_dueDate.add(cursor.getString(3));
 
-                //get integer value, convert to boolean. Add bool value to list.
-                boolean completed = cursor.getInt(3) == 1;
-                todo_completed.add(completed);
+
             }
         }
     }
 
     //recyclerView swipe logic
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -114,19 +115,23 @@ public class MainActivity extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             Todo todoToDelete = todosList.get(position);
 
+            Todo todoToUpdate = todosList.get(position);
+
             //switch case for future functionality such as right swipe to edit or archive
             switch(direction) {
                 case ItemTouchHelper.LEFT:
-
-
-                    ////ADD LOGIC TO REMOVE FROM DB
+                    // LOGIC TO REMOVE FROM DB
                     MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
                     myDB.deleteById(todoToDelete.getId());
-
+                    //logic to remove from recyclerview
                     todosList.remove(position);
                     recyclerViewAdapter.notifyItemRemoved(position);
                     break;
-
+                case ItemTouchHelper.RIGHT:
+                    //Takes to edit screen
+                    Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+                    intent.putExtra("todo", todoToUpdate);
+                    startActivity(intent);
 
             }
         }
@@ -136,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.icons8_delete)
+                    .addSwipeRightActionIcon(R.drawable.icons8_edit)
                     .create()
                     .decorate();
 

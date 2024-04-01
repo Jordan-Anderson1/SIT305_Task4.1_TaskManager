@@ -35,6 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.todo_title_text.setText(todosList.get(position).getTitle());
         holder.todo_description_text.setText(todosList.get(position).getDescription());
         holder.todo_id_text.setText(String.valueOf(todosList.get(position).getId()));
+        holder.todo_date_text.setText(String.valueOf(todosList.get(position).getDueDate()));
 
 
     }
@@ -49,11 +50,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView todo_title_text;
         TextView todo_description_text;
         TextView todo_id_text;
+
+        TextView todo_date_text;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             todo_title_text = itemView.findViewById(R.id.todo_title_text);
             todo_description_text = itemView.findViewById(R.id.todo_description_text);
             todo_id_text = itemView.findViewById(R.id.todo_id_text);
+            todo_date_text = itemView.findViewById(R.id.todo_date_text);
 
         }
     }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class AddActivity extends AppCompatActivity {
 
        EditText titleInput = findViewById(R.id.titleInput);
        EditText descriptionInput = findViewById(R.id.descriptionInput);
-       Button submitButton = findViewById(R.id.submitButton);
+       Button submitButton = findViewById(R.id.updateButton);
 
        CalendarView dateInput = findViewById(R.id.dateInput);
 

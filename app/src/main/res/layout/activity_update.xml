@@ -10,67 +10,75 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="36dp"
+        android:layout_width="314dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:padding="30dp"
-        android:text="Add a Task"
+        android:text="Update Task"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/titleInput"
+        app:layout_constraintBottom_toTopOf="@+id/updateTitleInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/titleInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/updateTitleInput"
+        android:layout_width="207dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginBottom="17dp"
+        android:autoText="true"
         android:ems="10"
         android:hint="Title:"
         android:inputType="text"
         android:padding="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionInput"
-        app:layout_constraintEnd_toEndOf="@+id/descriptionInput"
+        app:layout_constraintBottom_toTopOf="@+id/updateDescriptionInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/descriptionInput"
-        android:layout_width="207dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="7dp"
+        android:id="@+id/updateDescriptionInput"
+        android:layout_width="206dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="33dp"
         android:ems="10"
         android:hint="Description"
         android:inputType="text"
         android:minLines="3"
         android:padding="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/dateInput"
+        app:layout_constraintBottom_toTopOf="@+id/updateDateInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInput" />
+        app:layout_constraintTop_toBottomOf="@+id/updateTitleInput" />
 
     <Button
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Add item"
+        android:layout_marginStart="153dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="13dp"
+        android:text="Update!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateInput" />
+        app:layout_constraintTop_toBottomOf="@+id/updateDateInput" />
 
     <CalendarView
-        android:id="@+id/dateInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="38dp"
+        android:id="@+id/updateDateInput"
+        android:layout_width="319dp"
+        android:layout_height="299dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="44dp"
         app:layout_constraintBottom_toTopOf="@+id/updateButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateDescriptionInput" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

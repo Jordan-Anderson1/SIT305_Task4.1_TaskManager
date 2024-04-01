@@ -21,13 +21,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "todo_title";
     private static final String COLUMN_DESCRIPTION = "todo_description";
-    private static final String COLUMN_COMPLETED = "todo_completed";
 
     private static final String COLUMN_DATE = "todo_date";
-
-
-
-
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,8 +35,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_TITLE + " TEXT, " +
                         COLUMN_DESCRIPTION + " TEXT, " +
-                        COLUMN_DATE + " INTEGER, " +
-                        COLUMN_COMPLETED + " BOOLEAN);";
+                        COLUMN_DATE + " INTEGER)";
 
         db.execSQL(query);
     }
@@ -59,7 +53,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_TITLE, title);
         cv.put(COLUMN_DESCRIPTION, description);
-        cv.put(COLUMN_COMPLETED, false);
         cv.put(COLUMN_DATE, date);
 
 
@@ -96,6 +89,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Failed to delete!", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, "Successfully deleted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void updateData(String row_id, String title, String description, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_TITLE, title);
+        cv.put(COLUMN_DESCRIPTION, description);
+        cv.put(COLUMN_DATE, date);
+
+        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
+
+
+        if(result == -1){
+            Toast.makeText(context, "Failed to update!", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show();
         }
     }
 }
