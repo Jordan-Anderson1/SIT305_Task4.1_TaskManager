@@ -24,9 +24,12 @@ public class AddActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //add data to DB
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
                 myDB.addTodo(titleInput.getText().toString(), descriptionInput.getText().toString());
 
+                //go back to main activity
                 Intent intent = new Intent(AddActivity.this, MainActivity.class);
                 startActivity(intent);
 
