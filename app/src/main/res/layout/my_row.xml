@@ -20,7 +20,7 @@
 
 
             <TextView
-                android:id="@+id/todo_dueDate_text"
+                android:id="@+id/todo_id_text"
                 android:layout_width="148dp"
                 android:layout_height="50dp"
                 android:text="1"

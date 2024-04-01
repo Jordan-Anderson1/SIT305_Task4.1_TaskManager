@@ -73,19 +73,16 @@ public class MainActivity extends AppCompatActivity {
         //retrieve data
         storeDataInArrays();
 
+
+        //takes data from arrays and creates instances of the Todo class and adds to list
         for(int i = 0; i < todo_id.size(); i++){
-            Todo todo = new Todo(i, todo_title.get(i), todo_description.get(i));
+            Todo todo = new Todo(Integer.valueOf(todo_id.get(i)), todo_title.get(i), todo_description.get(i));
             todosList.add(todo);
         }
-
-
-
-
-
     }
 
 
-    //retrieved data from DB and stores in cursor object. Then taskes data from cursor and stores in
+    //retrieved data from DB and stores in cursor object. Then takes data from cursor and stores in
     //individual arrays.
     void storeDataInArrays(){
         Cursor cursor = myDB.readAllData();
@@ -104,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //swipe to delete functionality
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+    //recyclerView swipe logic
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -115,17 +112,22 @@ public class MainActivity extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
             int position = viewHolder.getAdapterPosition();
+            Todo todoToDelete = todosList.get(position);
 
+            //switch case for future functionality such as right swipe to edit or archive
             switch(direction) {
                 case ItemTouchHelper.LEFT:
-                    todosList.remove(position);
-                    recyclerViewAdapter.notifyItemRemoved(position);
+
 
                     ////ADD LOGIC TO REMOVE FROM DB
-                    break;
-                case ItemTouchHelper.RIGHT:
+                    MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+                    myDB.deleteById(todoToDelete.getId());
 
+                    todosList.remove(position);
+                    recyclerViewAdapter.notifyItemRemoved(position);
                     break;
+
+
             }
         }
 
