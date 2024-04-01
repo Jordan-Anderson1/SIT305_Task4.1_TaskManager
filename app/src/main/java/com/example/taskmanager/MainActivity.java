@@ -13,17 +13,20 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+
+    RecyclerViewAdapter recyclerViewAdapter;
+    List<Todo> todosList = new ArrayList<>();
     FloatingActionButton addButton;
 
     MyDatabaseHelper myDB;
     ArrayList<String> todo_id, todo_title, todo_description;
     ArrayList<Boolean> todo_completed;
 
-    CustomAdapter customAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
+        recyclerViewAdapter = new RecyclerViewAdapter(todosList, this);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         addButton = findViewById(R.id.button);
 
+        //Event listener for add button. Takes user to new activity to add a task.
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,14 +56,24 @@ public class MainActivity extends AppCompatActivity {
         todo_description = new ArrayList<>();
         todo_completed = new ArrayList<>();
 
+
+        //retrieve data
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(MainActivity.this, todo_id, todo_title, todo_description);
-        recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        for(int i = 0; i < todo_id.size(); i++){
+            Todo todo = new Todo(i, todo_title.get(i), todo_description.get(i));
+            todosList.add(todo);
+        }
+
+
+
+
 
     }
 
+
+    //retrieved data from DB and stores in cursor object. Then taskes data from cursor and stores in
+    //individual arrays.
     void storeDataInArrays(){
         Cursor cursor = myDB.readAllData();
         if(cursor.getCount() == 0){
