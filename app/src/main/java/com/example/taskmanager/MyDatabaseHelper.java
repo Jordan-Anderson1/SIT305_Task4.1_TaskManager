@@ -62,6 +62,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context, "Item added", Toast.LENGTH_SHORT).show();
         }
+
+        db.close();
     }
 
     Cursor readAllData() {
