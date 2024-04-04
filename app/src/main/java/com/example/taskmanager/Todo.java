@@ -31,5 +31,9 @@ public class Todo implements Serializable {
 
     public String getDueDate() { return dueDate; }
 
+    public void setDueDate(String dueDate){
+        this.dueDate = dueDate;
+    }
+
 
 }

@@ -86,7 +86,10 @@ public class MainActivity extends AppCompatActivity {
         sortByDate(todosList);
 
 
+
     }
+
+
 
     //Sorts list by date
     public void sortByDate(List<Todo> todos) {
@@ -113,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 todo_title.add(cursor.getString(1));
                 todo_description.add(cursor.getString(2));
                 todo_dueDate.add(cursor.getString(3));
-
-
             }
         }
     }
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         public void onChildDraw (Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,float dX, float dY,int actionState, boolean isCurrentlyActive){
 
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red))
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.deleteRed))
                     .addSwipeLeftActionIcon(R.drawable.icons8_delete)
                     .addSwipeRightActionIcon(R.drawable.icons8_edit)
                     .create()

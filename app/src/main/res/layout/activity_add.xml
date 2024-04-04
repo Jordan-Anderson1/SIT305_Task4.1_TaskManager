@@ -5,72 +5,77 @@
     android:id="@+id/button"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appBackground"
     tools:context=".AddActivity">
 
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="30dp"
+        android:padding="5dp"
         android:text="Add a Task"
+        android:textColor="#FFFFFF"
+        android:textSize="50sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/titleInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <EditText
         android:id="@+id/titleInput"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Title:"
         android:inputType="text"
         android:padding="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionInput"
-        app:layout_constraintEnd_toEndOf="@+id/descriptionInput"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="100dp" />
 
     <EditText
         android:id="@+id/descriptionInput"
-        android:layout_width="207dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Description"
+        android:hint="Description:"
         android:inputType="text"
         android:minLines="3"
         android:padding="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/dateInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInput" />
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/titleInput"
+        tools:layout_editor_absoluteX="102dp" />
 
     <Button
         android:id="@+id/updateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Add item"
+        android:layout_width="119dp"
+        android:layout_height="53dp"
+        android:autoText="true"
+        android:backgroundTint="#FFFFFF"
+        android:backgroundTintMode="src_over"
+        android:text="Add"
+        android:textColor="@color/titleColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateInput" />
+        app:layout_constraintTop_toBottomOf="@+id/dateInput"
+        app:strokeColor="@color/titleColor"
+        app:strokeWidth="3dp" />
 
     <CalendarView
         android:id="@+id/dateInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="38dp"
-        app:layout_constraintBottom_toTopOf="@+id/updateButton"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_corners_calendar"
+        android:dateTextAppearance="@style/TextAppearance.AppCompat.Large"
+        android:focusedMonthDateColor="@color/descriptionColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionInput"
+        style="@style/calendarStyle"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

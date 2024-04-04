@@ -36,7 +36,8 @@ public class AddActivity extends AppCompatActivity {
            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
                String formattedDay = String.format("%02d", dayOfMonth);
-               dateString = year + "-" + (month + 1) + "-" + formattedDay;
+               String formattedMonth = String.format("%02d", month + 1);
+               dateString = year + "-" + formattedMonth + "-" + formattedDay;
            }
        });
 

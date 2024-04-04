@@ -3,7 +3,15 @@
     <style name="Base.Theme.TaskManager" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/appBackground</item>
+
     </style>
 
-    <style name="Theme.TaskManager" parent="Base.Theme.TaskManager" />
+    <style name="Theme.TaskManager" parent="Base.Theme.TaskManager"
+        />
+
+
+    <style name="calendarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/titleColor</item>
+    </style>
 </resources>
