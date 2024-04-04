@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -30,7 +31,7 @@ public class UpdateActivity extends AppCompatActivity {
 
         //manage intent
         intent = getIntent();
-        Todo todo = (Todo) intent.getSerializableExtra("todo");
+        Todo todo = (Todo) intent.getSerializableExtra("todo"); //Gets todo object from intent
 
 
         //Initialise components
@@ -38,6 +39,7 @@ public class UpdateActivity extends AppCompatActivity {
         updateDescriptionInput = findViewById(R.id.updateDescriptionInput);
         updateCalendarInput = findViewById(R.id.updateDateInput);
         updateButton = findViewById(R.id.updateButton);
+
 
 
         //set values
@@ -59,9 +61,24 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //LOGIC TO UPDATE THE ACTIVITY
 
+                //Ensure date is valid to avoid null pointer exception
+                if(updatedDate == null){
+                    Toast.makeText(UpdateActivity.this, "Please select new date", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String newTitle = String.valueOf(updateTitleInput.getText().toString());
+                String newDescription = String.valueOf(updateDescriptionInput.getText().toString());
+
+                //Ensure title and description are not null or empty
+                if(newTitle == null || newTitle.equals("") || newDescription == null || newDescription.equals("")){
+                    Toast.makeText(UpdateActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
-                myDB.updateData(String.valueOf(todo.getId()), updateTitleInput.getText().toString(), updateDescriptionInput.getText().toString(),
-                        updatedDate);
+                myDB.updateData(String.valueOf(todo.getId()), newTitle,
+                        newDescription, updatedDate);
                 Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
                 startActivity(intent);
             }
