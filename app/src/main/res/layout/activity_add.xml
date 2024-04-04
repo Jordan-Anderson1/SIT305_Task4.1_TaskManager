@@ -19,8 +19,8 @@
         android:textColor="#FFFFFF"
         android:textSize="50sp"
         app:autoSizeTextType="uniform"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="36dp" />
 
     <EditText
         android:id="@+id/titleInput"
@@ -51,7 +51,6 @@
         android:id="@+id/updateButton"
         android:layout_width="119dp"
         android:layout_height="53dp"
-        android:autoText="true"
         android:backgroundTint="#FFFFFF"
         android:backgroundTintMode="src_over"
         android:text="Add"
@@ -67,7 +66,7 @@
         android:id="@+id/dateInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_corners_calendar"
         android:dateTextAppearance="@style/TextAppearance.AppCompat.Large"
         android:focusedMonthDateColor="@color/descriptionColor"
