@@ -159,10 +159,14 @@ public class MainActivity extends AppCompatActivity {
 
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                         .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.deleteRed))
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.descriptionColor))
                         .addSwipeLeftActionIcon(R.drawable.icons8_delete)
                         .addSwipeRightActionIcon(R.drawable.icons8_edit)
+                        .addPadding(1, 5, 3.5f, 5)
+                        .addCornerRadius(5, 5)
                         .create()
                         .decorate();
+
 
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
