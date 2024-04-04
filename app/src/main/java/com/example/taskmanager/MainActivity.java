@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             todosList.add(todo);
         }
 
-        //sortByDate(todosList);
+        sortByDate(todosList);
 
 
 
@@ -94,83 +94,79 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Sorts list by date
-//    public void sortByDate(List<Todo> todos) {
-//        Comparator<Todo> dateComparator = new Comparator<Todo>() {
-//            @Override
-//            public int compare(Todo todo1, Todo todo2) {
-//                return todo1.getDueDate().compareTo(todo2.getDueDate());
-//            }
-//        };
-//
-//        Collections.sort(todos, dateComparator);
-//    }
-
-
-
-
-    //retrieved data from DB and stores in cursor object. Then takes data from cursor and stores in
-    //individual arrays.
-    void storeDataInArrays(){
-        Cursor cursor = myDB.readAllData();
-        if(cursor.getCount() == 0){
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
-        }else{
-            while(cursor.moveToNext()){
-                todo_id.add(cursor.getString(0));
-                todo_title.add(cursor.getString(1));
-                todo_description.add(cursor.getString(2));
-                todo_dueDate.add(cursor.getLong(3));
+    public void sortByDate(List<Todo> todos) {
+        Collections.sort(todos, new Comparator<Todo>() {
+            @Override
+            public int compare(Todo o1, Todo o2) {
+                return Long.compare(o1.getDueDate(), o2.getDueDate());
             }
-        }
+        });
     }
 
-    //recyclerView swipe logic
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
 
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            int position = viewHolder.getAdapterPosition();
-            Todo todoToDelete = todosList.get(position);
-
-            Todo todoToUpdate = todosList.get(position);
-
-            //switch case for future functionality such as right swipe to edit or archive
-            switch(direction) {
-                case ItemTouchHelper.LEFT:
-                    // LOGIC TO REMOVE FROM DB
-                    MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
-                    myDB.deleteById(todoToDelete.getId());
-                    //logic to remove from recyclerview
-                    todosList.remove(position);
-                    recyclerViewAdapter.notifyItemRemoved(position);
-                    break;
-                case ItemTouchHelper.RIGHT:
-                    //Takes to edit screen
-                    Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
-                    intent.putExtra("todo", todoToUpdate);
-                    startActivity(intent);
-
+        //retrieved data from DB and stores in cursor object. Then takes data from cursor and stores in
+        //individual arrays.
+        public void storeDataInArrays () {
+            Cursor cursor = myDB.readAllData();
+            if (cursor.getCount() == 0) {
+                Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            } else {
+                while (cursor.moveToNext()) {
+                    todo_id.add(cursor.getString(0));
+                    todo_title.add(cursor.getString(1));
+                    todo_description.add(cursor.getString(2));
+                    todo_dueDate.add(cursor.getLong(3));
+                }
             }
         }
 
-        public void onChildDraw (Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,float dX, float dY,int actionState, boolean isCurrentlyActive){
+        //recyclerView swipe logic
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
 
-            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.deleteRed))
-                    .addSwipeLeftActionIcon(R.drawable.icons8_delete)
-                    .addSwipeRightActionIcon(R.drawable.icons8_edit)
-                    .create()
-                    .decorate();
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-        }
+                int position = viewHolder.getAdapterPosition();
+                Todo todoToDelete = todosList.get(position);
+
+                Todo todoToUpdate = todosList.get(position);
+
+                //switch case for future functionality such as right swipe to edit or archive
+                switch (direction) {
+                    case ItemTouchHelper.LEFT:
+                        // LOGIC TO REMOVE FROM DB
+                        MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+                        myDB.deleteById(todoToDelete.getId());
+                        //logic to remove from recyclerview
+                        todosList.remove(position);
+                        recyclerViewAdapter.notifyItemRemoved(position);
+                        break;
+                    case ItemTouchHelper.RIGHT:
+                        //Takes to edit screen
+                        Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+                        intent.putExtra("todo", todoToUpdate);
+                        startActivity(intent);
+
+                }
+            }
+
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.deleteRed))
+                        .addSwipeLeftActionIcon(R.drawable.icons8_delete)
+                        .addSwipeRightActionIcon(R.drawable.icons8_edit)
+                        .create()
+                        .decorate();
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
 
 
-    };
-}
+        };
+    }
