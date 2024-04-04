@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addButton;
 
     MyDatabaseHelper myDB;
-    ArrayList<String> todo_id, todo_title, todo_description, todo_dueDate;
+    ArrayList<String> todo_id, todo_title, todo_description;
+    ArrayList<Long> todo_dueDate;
 
 
 
@@ -83,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
             todosList.add(todo);
         }
 
-        sortByDate(todosList);
+        //sortByDate(todosList);
+
 
 
 
@@ -92,16 +94,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Sorts list by date
-    public void sortByDate(List<Todo> todos) {
-        Comparator<Todo> dateComparator = new Comparator<Todo>() {
-            @Override
-            public int compare(Todo todo1, Todo todo2) {
-                return todo1.getDueDate().compareTo(todo2.getDueDate());
-            }
-        };
+//    public void sortByDate(List<Todo> todos) {
+//        Comparator<Todo> dateComparator = new Comparator<Todo>() {
+//            @Override
+//            public int compare(Todo todo1, Todo todo2) {
+//                return todo1.getDueDate().compareTo(todo2.getDueDate());
+//            }
+//        };
+//
+//        Collections.sort(todos, dateComparator);
+//    }
 
-        Collections.sort(todos, dateComparator);
-    }
+
 
 
     //retrieved data from DB and stores in cursor object. Then takes data from cursor and stores in
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 todo_id.add(cursor.getString(0));
                 todo_title.add(cursor.getString(1));
                 todo_description.add(cursor.getString(2));
-                todo_dueDate.add(cursor.getString(3));
+                todo_dueDate.add(cursor.getLong(3));
             }
         }
     }

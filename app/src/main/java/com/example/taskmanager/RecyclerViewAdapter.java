@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -32,22 +34,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
 
+        //get instance of todo
+        Todo todo = todosList.get(position);
 
+        //get dueDate of todo in millis
+        long dateInMillis = todo.getDueDate();
 
+        //create date object and convert to calendar object
+        Date date = new Date(dateInMillis);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        //extract data from calendar object
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+
+        //convert to string
+        String formattedDate = String.format("%02d-%02d-%04d", day, month, year);
 
 
         holder.todo_title_text.setText(todosList.get(position).getTitle());
         holder.todo_description_text.setText(todosList.get(position).getDescription());
         holder.todo_id_text.setText(String.valueOf(todosList.get(position).getId()));
-        holder.todo_date_text.setText(String.valueOf(todosList.get(position).getDueDate()));
-
-
-
-
-
-
-
-
+        holder.todo_date_text.setText(formattedDate);
 
     }
 

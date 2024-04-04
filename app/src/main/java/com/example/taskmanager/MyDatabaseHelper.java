@@ -47,7 +47,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    void addTodo(String title, String description, String date) {
+    void addTodo(String title, String description, long date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -92,7 +92,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    void updateData(String row_id, String title, String description, String date) {
+    void updateData(String row_id, String title, String description, long date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TITLE, title);

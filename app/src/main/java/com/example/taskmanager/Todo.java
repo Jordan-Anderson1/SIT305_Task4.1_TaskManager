@@ -8,9 +8,9 @@ public class Todo implements Serializable {
     private String title;
     private String description;
 
-    private String dueDate;
+    private long dueDate;
 
-    public Todo(int id, String title, String description, String dueDate){
+    public Todo(int id, String title, String description, long dueDate){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -29,11 +29,11 @@ public class Todo implements Serializable {
         return description;
     }
 
-    public String getDueDate() { return dueDate; }
+    public long getDueDate() { return dueDate; }
 
-    public void setDueDate(String dueDate){
-        this.dueDate = dueDate;
-    }
+
+
+
 
 
 }

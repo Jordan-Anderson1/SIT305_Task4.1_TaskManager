@@ -11,6 +11,8 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class UpdateActivity extends AppCompatActivity {
 
     EditText updateTitleInput;
@@ -22,6 +24,7 @@ public class UpdateActivity extends AppCompatActivity {
     Button updateButton;
 
     String updatedDate;
+    Long dateInMillis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +48,25 @@ public class UpdateActivity extends AppCompatActivity {
         //set values
         updateTitleInput.setText(todo.getTitle());
         updateDescriptionInput.setText(todo.getDescription());
-
-        //get updated date value from calendar
         updateCalendarInput.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            //get updated date value from calendar
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String formattedDay = String.format("%02d", dayOfMonth);
-                updatedDate = year + "-" + (month + 1) + "-" + formattedDay;
+
+                //Create calendar instance
+                Calendar calendar = Calendar.getInstance();
+
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                dateInMillis = calendar.getTimeInMillis();
             }
         });
+
+
+
 
         //UPDATE ACTIVITY ONCE SUBMIT IS CLICKED
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +75,7 @@ public class UpdateActivity extends AppCompatActivity {
                 //LOGIC TO UPDATE THE ACTIVITY
 
                 //Ensure date is valid to avoid null pointer exception
-                if(updatedDate == null){
+                if(dateInMillis == null || dateInMillis == 0){
                     Toast.makeText(UpdateActivity.this, "Please select new date", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -78,7 +91,7 @@ public class UpdateActivity extends AppCompatActivity {
 
                 MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
                 myDB.updateData(String.valueOf(todo.getId()), newTitle,
-                        newDescription, updatedDate);
+                        newDescription, dateInMillis);
                 Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
                 startActivity(intent);
             }

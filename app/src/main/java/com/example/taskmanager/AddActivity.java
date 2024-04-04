@@ -11,9 +11,11 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class AddActivity extends AppCompatActivity {
 
-    public String dateString;
+    public long dateInMillis;
 
 
 
@@ -35,9 +37,14 @@ public class AddActivity extends AppCompatActivity {
            @Override
            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-               String formattedDay = String.format("%02d", dayOfMonth);
-               String formattedMonth = String.format("%02d", month + 1);
-               dateString = year + "-" + formattedMonth + "-" + formattedDay;
+               //Create calendar instance
+               Calendar calendar = Calendar.getInstance();
+
+               calendar.set(Calendar.YEAR, year);
+               calendar.set(Calendar.MONTH, month);
+               calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+               dateInMillis = calendar.getTimeInMillis();
            }
        });
 
@@ -48,7 +55,7 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //Ensure date is valid to avoid null pointer issues
-                if(dateString == null){
+                if(dateInMillis == 0){
                     Toast.makeText(AddActivity.this, "Please select a date", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -66,7 +73,7 @@ public class AddActivity extends AppCompatActivity {
 
                 //add data to DB
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
-                myDB.addTodo(title, description, dateString);
+                myDB.addTodo(title, description, dateInMillis);
 
                 //go back to main activity
                 Intent intent = new Intent(AddActivity.this, MainActivity.class);
